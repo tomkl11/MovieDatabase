@@ -79,6 +79,8 @@ app.use(session({
 // app.use(routeBase, callback);
 app.use("/static", express.static(__dirname + '/static'));
 app.use("/hello", require("./controllers/hello.route"));
+app.use("/movie", require("./controllers/movie.route"));
+app.use("/actor", require("./controllers/actor.route"));
 
 // npm install cors
 var cors = require('cors');
