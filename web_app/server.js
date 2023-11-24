@@ -81,12 +81,11 @@ app.use("/static", express.static(__dirname + '/static'));
 app.use("/hello", require("./controllers/hello.route"));
 app.use("/movie", require("./controllers/movie.route"));
 app.use("/actor", require("./controllers/actor.route"));
+app.use("/moveapi", require("./controllers/movieapi.route"));
 
 // npm install cors
 var cors = require('cors');
 const { request } = require('express');
-app.use(cors());
-
 
 let value = "something";
 let other = `xxx yyy ${value} zzz`;

@@ -1,0 +1,41 @@
+<!-- views/movie_list.ejs -->
+<!-- RECEIVES: cars [an array of car objects] + flashMessage [string, the error message] -->
+
+<h1>List of Cars</h1>
+<% if (flashMessage) { %>
+    <p style='color:red'><%= flashMessage %></p>
+<% } %>
+
+<!--<p><a href='/cars/edit/0'>Add a new car</a></p> -->
+
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <td>ID</td>
+        <td>Title</td>
+        <td>Gender</td>
+        <td>Summary</td>
+        <td>Grade</td>
+        <td>Age require</td>
+        <td>Language</td>
+        <td>Production Price</td>
+        <td>Duration</td>
+        <td>Projection Format</td>
+    </tr>
+    
+    <% for (var c of cars) { %>
+    <tr>
+        <td><%= c.movie_id %></td>
+        <td><%= c.movie_title %></td>
+        <td><%= c.movie_gender %></td>
+        <td><%= c.movie_summary%></td>
+        <td><%= c.movie_grade%></td>
+        <td><%= c.movie_age_require%></td>
+        <td><%= c.language%></td>
+        <td><%= c.movie_production_price%></td>
+        <td><%= c.movie_duration%></td>
+        <td><%= c.movie_projection_format%></td>
+    </tr>
+    <% } %>
+</table>
+</body>
+</html>
