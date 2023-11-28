@@ -48,8 +48,8 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-app.listen(3003, '0.0.0.0',
-    function() { console.log("Listening on "+3003   ); }
+app.listen(3002, '0.0.0.0',
+    function() { console.log("Listening on "+3002); }
 );
 
 app.get('/', (request, response) => { // 'GET' as a HTTP VERB, not as a 'getter'!
@@ -81,7 +81,6 @@ app.use("/static", express.static(__dirname + '/static'));
 app.use("/hello", require("./controllers/hello.route"));
 app.use("/movie", require("./controllers/movie.route"));
 app.use("/actor", require("./controllers/actor.route"));
-app.use("/moveapi", require("./controllers/movieapi.route"));
 
 // npm install cors
 var cors = require('cors');
