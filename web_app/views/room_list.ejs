@@ -1,0 +1,34 @@
+<!-- views/movie_list.ejs -->
+<h1>List of Rooms</h1>
+<% if (flashMessage) { %>
+    <p style='color:red'><%= flashMessage %></p>
+<% } %>
+
+<p><a href='/room/edit/0'>Add a new room</a></p>
+
+<table >
+    <tr align="center">
+        <td>ID</td>
+        <td>Name of the cinema</td>
+        <td>Floor</td>
+        <td>Area</td>
+        <td>Capacity</td>
+        <td>Format Screen</td>
+    </tr>
+
+    <% for (var c of rooms) { %>
+    <tr align="center">
+        <td><%= c.id_room%></td>
+        <td><%= c.cinema_name %></td>
+        <td><%= c.Floor %></td>
+        <td><%= c.area%></td>
+        <td><%= c.capacity%></td>
+        <td><%= c.format_screen%></td>
+        <td><a href='/room/show/<%= c.id_room%>'>Show</a></td>
+        <td><a href='/room/edit/<%= c.id_room%>'>Edit</a></td>
+        <td><a href='/room/delete/<%= c.id_room%>'>Delete</a></td>
+    </tr>
+    <% } %>
+</table>
+</body>
+</html>

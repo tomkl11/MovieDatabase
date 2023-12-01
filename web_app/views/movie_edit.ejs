@@ -1,31 +1,43 @@
 <!-- views/cars_edit.ejs -->
 <!-- RECEIVES: oneCar [a single car object] + brands [array of brand objects] -->
 
-<h1>Single car editor form</h1>
+<h1><%=header%></h1>
 
 <p><a href='/movie/list'>Back to the list</a></p>
 <!-- body-parser ==> we cannot use multipart/form-data ==> no file uploads -->
-<form action='/movie/update/<%= oneActor.id_movie %>' method='post'
+<form action='/movie/update/<%= oneMovie.id_movie %>' method='post'
             enctype='application/x-www-form-urlencoded'>
 <table class="table table-striped table-bordered table-hover">
     <tr><td>Movie:</td>
-        <td><input type='text' name='movie_title' value='<%= oneActor.movie_title %>' /></td></tr>
+        <td><input type='text' name='movie_title' value='<%= oneMovie.movie_title %>' /></td></tr>
     <tr><td>Gender:</td>
-        <td><input type='text' name='gender' value='<%= oneActor.gender %>' /></td></tr>
+        <td>
+            <select name="gender">
+                    <option value="horror">Horror</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="fantastic">Fantastic</option>
+                    <option value="comedy">Comedy</option>
+            </select>
+        </td></tr>
     <tr><td>Summmary:</td>
-        <td><input type='text' name='summary' value='<%= oneActor.summary %>' /></td></tr>
+        <td><input type='text' name='summary' value='<%= oneMovie.summary %>' /></td></tr>
     <tr><td>Grade:</td>
-        <td><input type='number' step="any" name='grade' value='<%= oneActor.grade %>' min="0" max="5.0" /></td></tr>
+        <td><input type='number' step="any" name='grade' value='<%= oneMovie.grade %>' min="0" max="5.0" /></td></tr>
     <tr><td>Age require:</td>
-        <td><input type='number' name='age_require' value='<%= oneActor.age_require %>'  min="0" max="18"/></td></tr>
+        <td><input type='number' name='age_require' value='<%= oneMovie.age_require %>'  min="0" max="18"/></td></tr>
     <tr><td>Language:</td>
-        <td><input type='text' name='language' value='<%= oneActor.language_%>' /></td></tr>
+        <td><input type='text' name='languages' value='<%= oneMovie.languages%>' /></td></tr>
     <tr><td>Production Price</td>
-        <td><input type='number' step="any" name='production_price' value='<%= oneActor.production_price %>' min="0.00" /></td></tr>
+        <td><input type='number' step="any" name='production_price' value='<%= oneMovie.production_price %>' min="0.00" /></td></tr>
     <tr><td>Duration</td>
-        <td><input type='time' name='duration' value='<%= oneActor.duration %>' /></td></tr>
+        <td><input type='time' name='duration' value='<%= oneMovie.duration %>' /></td></tr>
     <tr><td>Projection format</td>
-        <td><input type='text' name='projection_format' value='<%= oneActor.projection_format %>' /></td></tr>
+        <td>
+            <select name="projection_format">
+                <option value="2D">2D</option>
+                <option value="3D">3D</option>
+            </select>
+        </td>
     <tr><td colspan='2'> <input type='submit' value='SEND' /> </td></tr>
 </table>
 </form>

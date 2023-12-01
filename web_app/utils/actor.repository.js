@@ -5,24 +5,20 @@ pool = require("../utils/db.js");
 // JS include = relative to CONTROLLERS 
 // VIEW include = relative to VIEWS
 module.exports = {
-    getBlankMovie() { // defines the entity model
+    getBlankActor() { // defines the entity model
         return {
-            "id_movie": 0,
-            "movie_title": "",
-            "gender": "",
-            "summary": null,
-            "grade": 0.0,
-            "age_require": null,
-            "languages": "xxxx",
-            "production_price": 0.0,
-            "duration": "00:00",
-            "projection_format": ""
+            "id_actor": 0,
+            "name": "",
+            "role": null,
+            "rewards": null,
+            "birthdate" : "XXXX/XX/XX",
+            "nationality": ""
         };
     },
-    async getAllMovies() {
+    async getAllActors() {
         try {
             let conn = await pool.getConnection();
-            let sql = "SELECT * FROM MOVIE";
+            let sql = "SELECT * FROM ACTOR";
             const [rows, fields] = await conn.execute(sql);
             conn.release();
             return rows;
@@ -31,14 +27,14 @@ module.exports = {
             throw err;
         }
     },
-    async getOneMovie(movieId) {
+    async getOneActor(actorId) {
         try {
             let conn = await pool.getConnection();
-            let sql = "SELECT * FROM MOVIE WHERE  id_movie = ?";
-            console.log(movieId);
-            const [rows, fields] = await conn.execute(sql, [movieId]);
+            let sql = "SELECT * FROM ACTOR WHERE  id_actor = ?";
+            console.log(actorId);
+            const [rows, fields] = await conn.execute(sql, [actorId]);
             conn.release();
-            console.log("CARS FETCHED: " + rows.length);
+            console.log("ACTOR FETCHED: " + rows.length);
             if (rows.length == 1) {
                 return rows[0];
             } else {
@@ -49,11 +45,11 @@ module.exports = {
             throw err;
         }
     },
-    async delOneMovie(movieId){
+    async delOneActor(actorId){
         try {
             let conn = await pool.getConnection();
-            let sql = "DELETE FROM MOVIE WHERE id_movie = ?";
-            const [okPacket, fields] = await conn.execute(sql, [ movieId ]);
+            let sql = "DELETE FROM ACTOR WHERE id_actor = ?";
+            const [okPacket, fields] = await conn.execute(sql, [ actorId ]);
             conn.release();
             console.log("DELETE "+JSON.stringify(okPacket));
             return okPacket.affectedRows;
@@ -63,10 +59,10 @@ module.exports = {
             throw err;
         }
     },
-    async addOneMovie() {
+    async addOneActor() {
         try {
             let conn = await pool.getConnection();
-            let sql = "INSERT INTO MOVIE (id_movie, gender ) VALUES (NULL,'') ";
+            let sql = "INSERT INTO ACTOR (id_actor,name,birthdate,nationality) VALUES (NULL,'','2001/01/01','') ";
             const [okPacket, fields] = await conn.execute(sql, [] );
             conn.release();
             console.log("INSERT " + JSON.stringify(okPacket));
@@ -76,16 +72,13 @@ module.exports = {
             throw err;
         }
     },
-    async editOneMovie(movieId, movie_title, gender, summary, grade, age_require, language, production_price, duration, projection_format) {
+    async editOneActor(actorId, name, role, rewards, birthdate, nationality) {
         try {
             let conn = await pool.getConnection();
-            if (age_require==''){
-                age_require = null;
-            }
-            let sql = "UPDATE MOVIE SET movie_title=?, gender=?, summary=?, grade=?, age_require=?, languages=?, production_price=?, duration=?, projection_format= ?" +
-                " WHERE  id_movie = ? ";// TODO: named parameters? :something
+            let sql = "UPDATE ACTOR SET name=?, role=?, rewards=?, birthdate=?, nationality=?" +
+                " WHERE  id_actor = ? ";// TODO: named parameters? :something
             const [okPacket, fields] = await conn.execute(sql,
-                [movie_title, gender, summary, grade, age_require, language, production_price, duration, projection_format, movieId]);
+                [name, role, rewards, birthdate, nationality, actorId]);
             conn.release();
             console.log("UPDATE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;

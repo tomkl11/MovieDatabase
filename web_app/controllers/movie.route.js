@@ -7,6 +7,7 @@ router.get('/show/:movieId', movieShowAction);
 router.get('/delete/:movieId', carDelAction);
 router.get('/edit/:movieId', movieEditAction);
 router.post('/update/:movieId', movieUpdateAction);
+
 async function movieListAction(request, response) {
     // response.send("LIST ACTION");
     var movies = await movieRepo.getAllMovies();
@@ -16,31 +17,39 @@ async function movieListAction(request, response) {
 
     response.render("movie_list", {"movies": movies, "flashMessage": flashMessage});
 }
+
 async function movieShowAction(request, response) {
     // response.send("SHOW ACTION");
     var oneMovie = await movieRepo.getOneMovie(request.params.movieId);
-    response.render("movie_show", { "oneMovie": oneMovie });
+    response.render("movie_show", {"oneMovie": oneMovie});
 }
 
 
 async function movieEditAction(request, response) {
     var idMovie = request.params.movieId;
     var movie;
-    if (idMovie !== "0")
-        movie= await movieRepo.getOneMovie(idMovie);
-    else
+    let header;
+    if (idMovie !== "0"){
+        header = "Modify this new movie here";
+        movie = await movieRepo.getOneMovie(idMovie);
+    }
+    else{
+        header = "Add a movie here";
         movie = movieRepo.getBlankMovie();
-    response.render("movie_edit", {"oneMovie": movie});
+    }
+    response.render("movie_edit", {"oneMovie": movie, "header" : header});
 }
+
 async function carDelAction(request, response) {
     var numRows = await movieRepo.delOneMovie(request.params.movieId);
-    request.session.flashMessage = "ROWS DELETED: "+numRows;
+    request.session.flashMessage = "ROWS DELETED: " + numRows;
     response.redirect("/movie/list");
 }
+
 async function movieUpdateAction(request, response) {
     // response.send("UPDATE ACTION");
     var movieId = request.params.movieId;
-    if (movieId==="0") movieId = await movieRepo.addOneMovie();
+    if (movieId === "0") movieId = await movieRepo.addOneMovie();
     // TODO: BETTER VALIDATION!!!!
     var numRows = await movieRepo.editOneMovie(movieId,
         request.body.movie_title,
@@ -48,11 +57,11 @@ async function movieUpdateAction(request, response) {
         request.body.summary,
         request.body.grade,
         request.body.age_require,
-        request.body.language,
+        request.body.languages,
         request.body.production_price,
         request.body.duration,
         request.body.projection_format
-)
+    )
     request.session.flashMessage = "ROWS UPDATED: " + numRows;
     response.redirect("/movie/list");
 }

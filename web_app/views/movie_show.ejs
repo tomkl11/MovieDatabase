@@ -1,0 +1,25 @@
+<!-- views/movie_show.ejs -->
+<!-- RECEIVES: oneCar [a single car object] -->
+<!-- display in a secure way: every active content is ESCAPED (as HTML entities...) -->
+<!-- Security problems: SQL Injection, XSS Cross Site Scripting  -->
+<!-- include("partial_headers.ejs"); -->
+
+<h1>Information of the movie</h1>
+
+<p><a href='/movie/list'>Back to the list</a></p>
+
+<table class="table table-striped table-bordered table-hover">
+    <tr><td>ID:</td><td> <%= oneMovie.id_movie %> </td></tr>
+    <tr><td>Title:</td><td><%= oneMovie.movie_title %></td> </tr>
+    <tr><td>Gender:</td><td> <%= oneMovie.gender%> </td></tr>
+    <tr><td>Summary:</td><td> <%= oneMovie.summary %> </td></tr>
+    <tr><td>Grade:</td><td> <%= oneMovie.grade %> </td></tr>
+    <tr><td>Age require:</td><td><%= oneMovie.age_require %></td></tr>
+    <tr><td>Language:</td><td> <%= oneMovie.languages%> </td></tr>
+    <tr><td>Production Price:</td><td> <%= oneMovie.production_price %> </td></tr>
+    <tr><td>Duration:</td><td> <%= oneMovie.duration%> </td></tr>
+    <tr><td>Projection Format:</td><td> <%= oneMovie.projection_format %> </td></tr>
+</table>
+
+</body>
+</html>

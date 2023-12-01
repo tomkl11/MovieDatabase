@@ -1,0 +1,21 @@
+<!-- views/movie_show.ejs -->
+<!-- RECEIVES: oneCar [a single car object] -->
+<!-- display in a secure way: every active content is ESCAPED (as HTML entities...) -->
+<!-- Security problems: SQL Injection, XSS Cross Site Scripting  -->
+<!-- include("partial_headers.ejs"); -->
+
+<h1>Single movie Datasheet</h1>
+
+<p><a href='/actor/list'>Back to the list</a></p>
+
+<table class="table table-striped table-bordered table-hover">
+    <tr><td>ID:</td><td> <%= oneActor.id_actor %> </td></tr>
+    <tr><td>Name:</td><td><%= oneActor.name %></td></tr>
+    <tr><td>Role:</td><td> <%= oneActor.role%> </td></tr>
+    <tr><td>Rewards:</td><td> <%= oneActor.rewards %> </td></tr>
+    <tr><td>Birthdate:</td><td> <%= oneActor.birthdate %> </td></tr>
+    <tr><td>Nationality:</td><td><%= oneActor.nationality %></td> </tr>
+</table>
+
+</body>
+</html>
