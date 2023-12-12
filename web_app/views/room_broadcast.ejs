@@ -1,0 +1,36 @@
+<!-- views/movie_list.ejs -->
+<h1>List of Rooms broadcast this Movie</h1>
+<% if (flashMessage) { %>
+    <p style='color:red'><%= flashMessage %></p>
+<% } %>
+
+<p><a href='/movie/list'>Back to the List</a></p>
+<p><a href='/broadcast/rooms/<%= oneMovie.id_movie%>/edit/0'>Add a room</a></p>
+
+<table >
+    <tr align="center">
+        <td>ID</td>
+        <td>Name of the cinema</td>
+        <td>Floor</td>
+        <td>Area</td>
+        <td>Capacity</td>
+        <td>Format_Screen</td>
+    </tr>
+
+    <% for (var c of rooms) { %>
+        <tr align="center">
+            <td><%= c.id%></td>
+            <td><%= c.cinema_name %></td>
+            <td><%= c.Floor %></td>
+            <td><%= c.area%></td>
+            <td><%= c.capacity%></td>
+            <td><%= c.format_screen%></td>
+            <td><a href="/broadcast/rooms/<%= oneMovie.id_movie%>/edit/<%= c.id%>"> Edit </a> </td>
+            <td><a href="/broadcast/delete/<%= oneMovie.id_movie%>/<%= c.id%>">Delete</a> </td>
+            <td><a href='/room/show/<%= c.id_actor%>'>Show</a></td>
+        </tr>
+    <% } %>
+
+</table>
+</body>
+</html>

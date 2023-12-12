@@ -2,15 +2,19 @@
 const express = require('express');
 const router = express.Router();
 const movieRepo = require('../utils/movie.repository');
+const participateRepo = require('../utils/paricipate.repository');
+const broadcastRepo = require('../utils/broadcast.repository');
+const {delAllParticipateOfMovie} = require("../utils/paricipate.repository");
 router.get('/list', movieListAction);
 router.get('/show/:movieId', movieShowAction);
-router.get('/delete/:movieId', carDelAction);
+router.get('/delete/:movieId', movieDelAction);
 router.get('/edit/:movieId', movieEditAction);
 router.post('/update/:movieId', movieUpdateAction);
 
 async function movieListAction(request, response) {
     // response.send("LIST ACTION");
     var movies = await movieRepo.getAllMovies();
+
     // console.log(movies);
     var flashMessage = request.session.flashMessage; // express-flash ...
     request.session.flashMessage = "";
@@ -40,9 +44,13 @@ async function movieEditAction(request, response) {
     response.render("movie_edit", {"oneMovie": movie, "header" : header});
 }
 
-async function carDelAction(request, response) {
-    var numRows = await movieRepo.delOneMovie(request.params.movieId);
+async function movieDelAction(request, response) {
+    let idMovie = request.params.movieId;
+    await participateRepo.delAllParticipateOfMovie(idMovie);
+    await broadcastRepo.delAllBroadcastOfMovie(idMovie);
+    var numRows = await movieRepo.delOneMovie(idMovie);
     request.session.flashMessage = "ROWS DELETED: " + numRows;
+
     response.redirect("/movie/list");
 }
 
@@ -65,5 +73,6 @@ async function movieUpdateAction(request, response) {
     request.session.flashMessage = "ROWS UPDATED: " + numRows;
     response.redirect("/movie/list");
 }
+
 
 module.exports = router;

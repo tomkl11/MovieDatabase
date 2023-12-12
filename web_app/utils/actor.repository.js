@@ -9,7 +9,6 @@ module.exports = {
         return {
             "id_actor": 0,
             "name": "",
-            "role": null,
             "rewards": null,
             "birthdate" : "XXXX/XX/XX",
             "nationality": ""
@@ -72,13 +71,13 @@ module.exports = {
             throw err;
         }
     },
-    async editOneActor(actorId, name, role, rewards, birthdate, nationality) {
+    async editOneActor(actorId, name, rewards, birthdate, nationality) {
         try {
             let conn = await pool.getConnection();
-            let sql = "UPDATE ACTOR SET name=?, role=?, rewards=?, birthdate=?, nationality=?" +
+            let sql = "UPDATE ACTOR SET name=?, rewards=?, birthdate=?, nationality=?" +
                 " WHERE  id_actor = ? ";// TODO: named parameters? :something
             const [okPacket, fields] = await conn.execute(sql,
-                [name, role, rewards, birthdate, nationality, actorId]);
+                [name, rewards, birthdate, nationality, actorId]);
             conn.release();
             console.log("UPDATE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;

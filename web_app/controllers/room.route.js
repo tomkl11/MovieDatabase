@@ -2,11 +2,12 @@
 const express = require('express');
 const router = express.Router();
 const roomRepo = require('../utils/room.repository');
+const broadcastRepo = require('../utils/broadcast.repository');
 router.get('/list', roomListAction);
 router.get('/show/:roomId', roomShowAction);
 router.get('/delete/:roomId', roomDelAction);
 router.get('/edit/:roomId', roomEditAction);
-router.post('/update/:roomId', actorUpdateAction);
+router.post('/update/:roomId', roomUpdateAction);
 async function roomListAction(request, response) {
     // response.send("LIST ACTION");
     var rooms = await roomRepo.getAllRooms();
@@ -37,11 +38,13 @@ async function roomEditAction(request, response) {
     response.render("room_edit", {"oneRoom": room, "header": header});
 }
 async function roomDelAction(request, response) {
-    var numRows = await roomRepo.delOneRoom(request.params.roomId);
+    let idRoom = request.params.roomId;
+    await broadcastRepo.delAllBroadcastOfRoom(idRoom);
+    var numRows = await roomRepo.delOneRoom(idRoom);
     request.session.flashMessage = "ROWS DELETED: "+numRows;
     response.redirect("/room/list");
 }
-async function actorUpdateAction(request, response) {
+async function roomUpdateAction(request, response) {
     // response.send("UPDATE ACTION");
     var idRoom = request.params.roomId;
     if (idRoom==="0")  idRoom= await roomRepo.addOneRoom();

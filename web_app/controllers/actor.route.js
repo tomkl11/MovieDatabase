@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const actorRepo = require('../utils/actor.repository');
+const participateRepo = require("../utils/paricipate.repository");
 router.get('/list', actorListAction);
 router.get('/show/:actorId', actorShowAction);
 router.get('/delete/:actorId', actorDelAction);
@@ -32,12 +33,14 @@ async function actorEditAction(request, response) {
     }
     else{
         actor = actorRepo.getBlankActor();
-        header = "Add a new actore here"
+        header = "Add a new actor here"
     }
     response.render("actor_edit", {"oneActor": actor, "header": header});
 }
 async function actorDelAction(request, response) {
-    var numRows = await actorRepo.delOneActor(request.params.actorId);
+    let actorId = request.params.actorId;
+    await participateRepo.delAllParticipateOfMovie(actorId);
+    var numRows = await actorRepo.delOneActor(actorId);
     request.session.flashMessage = "ROWS DELETED: "+numRows;
     response.redirect("/actor/list");
 }
@@ -48,7 +51,6 @@ async function actorUpdateAction(request, response) {
     // TODO: BETTER VALIDATION!!!!
     var numRows = await actorRepo.editOneActor(actorId,
         request.body.name,
-        request.body.role,
         request.body.rewards,
         request.body.birthdate,
         request.body.nationality,

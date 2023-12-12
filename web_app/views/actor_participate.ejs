@@ -1,0 +1,35 @@
+<!-- views/movie_list.ejs -->
+<h1>List of Actors for this Movie</h1>
+<% if (flashMessage) { %>
+    <p style='color:red'><%= flashMessage %></p>
+<% } %>
+
+<p><a href='/movie/list'>Back to the List</a></p>
+<p><a href='/participate/actors/<%= oneMovie.id_movie%>/edit/0'>Add an actor</a></p>
+
+<table >
+    <tr align="center">
+        <td>ID</td>
+        <td>Name</td>
+        <td>Role</td>
+        <td>Rewards</td>
+        <td>Birthdate</td>
+        <td>Nationality</td>
+    </tr>
+
+    <% for (var c of actors) { %>
+        <tr align="center">
+            <td><%= c.id%></td>
+            <td><%= c.name %></td>
+            <td><%= c.role %></td>
+            <td><%= c.rewards%></td>
+            <td><%= c.birthdate%></td>
+            <td><%= c.nationality%></td>
+            <td><a href="/participate/actors/<%= oneMovie.id_movie%>/edit/<%= c.id%>"> Edit </a> </td>
+            <td><a href="/participate/delete/<%= oneMovie.id_movie%>/<%= c.id%>">Delete</a> </td>
+            <td><a href='/actor/show/<%= c.id_actor%>'>Show</a></td>
+        </tr>
+    <% } %>
+</table>
+</body>
+</html>

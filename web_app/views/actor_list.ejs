@@ -10,7 +10,6 @@
     <tr align="center">
         <td>ID</td>
         <td>Name</td>
-        <td>Role</td>
         <td>Rewards</td>
         <td>Birthdate</td>
         <td>Nationality</td>
@@ -20,13 +19,13 @@
     <tr align="center">
         <td><%= c.id_actor%></td>
         <td><%= c.name %></td>
-        <td><%= c.role %></td>
         <td><%= c.rewards%></td>
         <td><%= c.birthdate%></td>
         <td><%= c.nationality%></td>
         <td><a href='/actor/show/<%= c.id_actor%>'>Show</a></td>
         <td><a href='/actor/edit/<%= c.id_actor%>'>Edit</a></td>
         <td><a href='/actor/delete/<%= c.id_actor%>'>Delete</a></td>
+        <td><a href='/participate/movies/<%= c.id_actor%>'>All movies</a> </td>
     </tr>
     <% } %>
 </table>

@@ -1,0 +1,38 @@
+<!-- views/movie_list.ejs -->
+<h1>List of Movies</h1>
+<% if (flashMessage) { %>
+    <p style='color:red'><%= flashMessage %></p>
+<% } %>
+
+
+<table >
+    <tr align="center">
+        <td>ID</td>
+        <td>Title</td>
+        <td>Gender</td>
+        <td>Summary</td>
+        <td>Grade</td>
+        <td>Age require</td>
+        <td>Language</td>
+        <td>Production Price</td>
+        <td>Duration</td>
+        <td>Projection Format</td>
+    </tr>
+
+    <% for (var c of movies) { %>
+        <tr align="center">
+            <td><%= c.id  %></td>
+            <td><%= c.movie_title %></td>
+            <td><%= c.gender %></td>
+            <td><%= c.summary%></td>
+            <td><%= c.grade%></td>
+            <td><%= c.age_require%></td>
+            <td><%= c.languages %></td>
+            <td><%= c.production_price%></td>
+            <td><%= c.duration%></td>
+            <td><%= c.projection_format%></td>
+        </tr>
+    <% } %>
+</table>
+</body>
+</html>
