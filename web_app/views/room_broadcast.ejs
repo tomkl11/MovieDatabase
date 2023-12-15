@@ -5,7 +5,6 @@
 <% } %>
 
 <p><a href='/movie/list'>Back to the List</a></p>
-<p><a href='/broadcast/rooms/<%= oneMovie.id_movie%>/edit/0'>Add a room</a></p>
 
 <table >
     <tr align="center">
@@ -19,15 +18,12 @@
 
     <% for (var c of rooms) { %>
         <tr align="center">
-            <td><%= c.id%></td>
+            <td><%= c.id_room%></td>
             <td><%= c.cinema_name %></td>
             <td><%= c.Floor %></td>
             <td><%= c.area%></td>
             <td><%= c.capacity%></td>
             <td><%= c.format_screen%></td>
-            <td><a href="/broadcast/rooms/<%= oneMovie.id_movie%>/edit/<%= c.id%>"> Edit </a> </td>
-            <td><a href="/broadcast/delete/<%= oneMovie.id_movie%>/<%= c.id%>">Delete</a> </td>
-            <td><a href='/room/show/<%= c.id_actor%>'>Show</a></td>
         </tr>
     <% } %>
 

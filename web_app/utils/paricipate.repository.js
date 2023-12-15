@@ -48,18 +48,6 @@ module.exports = {
         }
         return actorsOut;
     },
-    async getAllParticipate() {
-        try {
-            let conn = await pool.getConnection();
-            let sql = "SELECT * FROM partcipate";
-            const [rows, fields] = await conn.execute(sql);
-            conn.release();
-            return rows;
-        } catch (err) {
-            console.log(err);
-            throw err;
-        }
-    },
     async getOneParticipate(participateId) {
         try {
             let conn = await pool.getConnection();
@@ -91,7 +79,8 @@ module.exports = {
             console.log(err);
             throw err;
         }
-    },async delAllParticipateOfMovie(movieId){
+    },
+    async delAllParticipateOfMovie(movieId){
         try {
             let conn = await pool.getConnection();
             let sql = "DELETE FROM partcipate WHERE id_movie = ?";
@@ -104,7 +93,8 @@ module.exports = {
             console.log(err);
             throw err;
         }
-    },async delAllParticipateOfActor(movieId){
+    },
+    async delAllParticipateOfActor(movieId){
         try {
             let conn = await pool.getConnection();
             let sql = "DELETE FROM partcipate WHERE id_actor = ?";
@@ -133,11 +123,11 @@ module.exports = {
             throw err;
         }
     },
-    async addOneParticipate(actorId, movieId,id, role){
+    async addOneParticipate(ParticipateId,actorId, movieId,role){
         try {
             let conn = await pool.getConnection();
             let sql = "INSERT INTO partcipate (id_actor,id_movie,id,role) VALUES (?,?,?, ?) ";
-            const [okPacket, fields] = await conn.execute(sql, [actorId,movieId,id, role] );
+            const [okPacket, fields] = await conn.execute(sql, [actorId,movieId,ParticipateId, role] );
             conn.release();
             console.log("INSERT " + JSON.stringify(okPacket));
         } catch (err) {

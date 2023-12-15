@@ -3,10 +3,6 @@ const router = express.Router();
 const participateRepo = require("../utils/paricipate.repository");
 const movieRepo = require("../utils/movie.repository");
 const actorRepo = require("../utils/actor.repository");
-const {addOneActor, getOneActor} = require("../utils/actor.repository");
-const {getBlanckParticipate, addOneParticipate, getAllParticipate} = require("../utils/paricipate.repository");
-const {request} = require("express");
-
 router.get ('/actors/:movieId', actor_partcipateListAction);
 router.get('/actors/:movieId/edit/:participateId', actor_participateEditAction);
 router.get('/movies/:actorId', movie_partcipateListAction);
@@ -60,8 +56,8 @@ async function participateUpdateAction(request, response){
         list = "/participate/actors/"+idMovie;
     }
     if (idParticipate=="0"){
-        let id = await participateRepo.maxId()+1;
-        await participateRepo.addOneParticipate(idActor, idMovie, id, role);
+        let idParticipate = await participateRepo.maxId()+1;
+        await participateRepo.addOneParticipate(idParticipate,idActor, idMovie, role);
     }
     else{
         await participateRepo.editOneParticipate(idParticipate,idActor,idMovie,role);

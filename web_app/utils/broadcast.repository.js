@@ -2,12 +2,13 @@
 // utils/movie.repository.js
 pool = require("../utils/db.js");
 const roomRepo = require("../utils/room.repository");
+const movieRepo = require("../utils/movie.repository");
 var lastId =0;
 
 // JS include = relative to CONTROLLERS 
 // VIEW include = relative to VIEWS
 module.exports = {
-    getBlanckParticipate(){
+    getBlanckBroadcast(){
         return {
             "id_actor" : null,
             "id_movie" : null,
@@ -46,18 +47,6 @@ module.exports = {
             }
         }
         return roomsOut;
-    },
-    async getAllParticipate() {
-        try {
-            let conn = await pool.getConnection();
-            let sql = "SELECT * FROM partcipate";
-            const [rows, fields] = await conn.execute(sql);
-            conn.release();
-            return rows;
-        } catch (err) {
-            console.log(err);
-            throw err;
-        }
     },
     async getOneBroadcast(broadcastId) {
         try {
@@ -160,12 +149,12 @@ module.exports = {
             throw err;
         }
     },
-    async getAllMoviesOfRoom(actorId) {
+    async getAllMoviesOfRoom(roomId) {
         try {
             let conn = await pool.getConnection();
             let sql = "SELECT * FROM Movie INNER JOIN broadcast ON Movie.id_movie = broadcast.id_movie  WHERE  id_room = ?";
-            console.log(actorId);
-            const [rows, fields] = await conn.execute(sql, [actorId]);
+            console.log(roomId);
+            const [rows, fields] = await conn.execute(sql, [roomId]);
             conn.release();
             console.log("participateOfMovie FETCHED: " + rows.length);
             return rows;
@@ -173,6 +162,25 @@ module.exports = {
             console.log(err);
             throw err;
         }
+    },
+    async getAllMoviesNotInRoom(roomId) {
+        let movies = await movieRepo.getAllMovies();
+        let moviesInRoom = await this.getAllMoviesOfRoom(roomId);
+        var moviesOut = []
+        for (var movie of movies){
+            let broadCastRoom = false;
+            var i = 0;
+            while (!broadCastRoom && i< moviesInRoom.length){
+                broadCastRoom = moviesInRoom[i].id_movie===movie.id_movie;
+                i++;
+            }
+            if (!broadCastRoom){
+                const index = moviesOut.length;
+                moviesOut[index]= {};
+                Object.assign(moviesOut[index], movie);
+            }
+        }
+        return moviesOut;
     }
 
 };

@@ -1,9 +1,10 @@
 <!-- views/movie_list.ejs -->
-<h1>List of Movies played by this Actor</h1>
+<h1>List of Movies in Room</h1>
 <% if (flashMessage) { %>
     <p style='color:red'><%= flashMessage %></p>
 <% } %>
-
+<p><a href='/room/list'>Back to the List</a></p>
+<p><a href='/broadcast/movies/<%= oneRoom.id_room%>/edit/0'>Add a movie</a></p>
 
 <table >
     <tr align="center">
@@ -31,6 +32,8 @@
             <td><%= c.production_price%></td>
             <td><%= c.duration%></td>
             <td><%= c.projection_format%></td>
+            <td><a href="/broadcast/movies/<%= oneRoom.id_room%>/edit/<%= c.id%>"> Edit </a> </td>
+            <td><a href='/broadcast/delete/<%= oneRoom.id_room%>/<%= c.id%>'>Delete</a> </td>
         </tr>
     <% } %>
 </table>

@@ -39,7 +39,7 @@ async function actorEditAction(request, response) {
 }
 async function actorDelAction(request, response) {
     let actorId = request.params.actorId;
-    await participateRepo.delAllParticipateOfMovie(actorId);
+    await participateRepo.delAllParticipateOfActor(actorId);
     var numRows = await actorRepo.delOneActor(actorId);
     request.session.flashMessage = "ROWS DELETED: "+numRows;
     response.redirect("/actor/list");
